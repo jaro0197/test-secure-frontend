@@ -1,0 +1,23 @@
+﻿name: Node.js CI
+
+on:
+  push:
+    branches:
+      - ken09
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, firefox, edge]
+    container:
+      image: cypress/browsers:node-20.11.0-chrome-121.0.6167.184-1-ff-123.0-edge-121.0.2277.128-1
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run fe
+        run: ./start-fe.sh
+      - name: Cypress run on ${{ matrix.browser }}
+        run: npx cypress run --headless --browser ${{ matrix.browser }} --spec "cypress/e2e/isolation/*"
