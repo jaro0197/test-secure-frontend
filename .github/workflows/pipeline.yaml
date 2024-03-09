@@ -1,10 +1,5 @@
 ﻿name: Node.js CI
 
-on:
-  push:
-    branches:
-      - ken09
-
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
