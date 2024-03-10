@@ -46,4 +46,4 @@ jobs:
       - name: Run grid
         run: docker compose up -d
       - name: Run tests
-        run: SELENIUM_REMOTE_URL=http://host.docker.internal:4444 npx playwright test
+        run: SELENIUM_REMOTE_URL=http://localhost:4444 npx playwright test
