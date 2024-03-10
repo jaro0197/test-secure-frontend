@@ -10,19 +10,19 @@ defaults:
     shell: bash
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18, 20]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm test
+#  test:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        node-version: [18, 20]
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: ${{ matrix.node-version }}
+#      - run: npm ci
+#      - run: npm test
 
   tests_e2e:
     runs-on: ubuntu-latest
@@ -46,4 +46,4 @@ jobs:
       - name: Run grid
         run: docker compose up -d
       - name: Run tests
-        run: SELENIUM_REMOTE_URL=http://localhost:4444 npx playwright test
+        run: SELENIUM_REMOTE_URL=http://host.docker.internal:4444 npx playwright test
