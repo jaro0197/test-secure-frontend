@@ -1,8 +1,9 @@
 name: Node CI
 
 on:
-  pull_request:
-    branches: [develop]
+  push:
+    branches:
+      - header
 
 defaults:
   run:
@@ -25,6 +26,11 @@ jobs:
 
   tests_e2e:
     runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:stable
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
     strategy:
       matrix:
         node-version: [18, 20]
@@ -37,7 +43,7 @@ jobs:
       - run: npm ci
       - name: Start server and check login
         run: bash ./run-app.sh
-      - name: Install playwright browsers
-        run: npx playwright install --with-deps firefox chromium
+      - name: Run grid
+        run: docker compose up -d
       - name: Run tests
-        run: npx playwright test
+        run: SELENIUM_REMOTE_URL=http://localhost:4444 npx playwright test
